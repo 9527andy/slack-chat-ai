@@ -43,7 +43,6 @@ def handle_app_mention_events(event, say, logger):
         }
     print(user_message)
 
-    # 调用AnythingLLM的API获取回复
     response = requests.post(api_url, json=data, headers=header)
     if response.status_code == 200:
         model_reply = response.json()
