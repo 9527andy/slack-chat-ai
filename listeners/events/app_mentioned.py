@@ -13,17 +13,17 @@ and generates an AI response if text is provided, otherwise sends a default resp
 
 
 def app_mentioned_callback(event, say, logger):
-    print(event)
-    user_message = event["text"]
-    data =  {
-        "message": user_message,
-        "mode": "chat"
-        }
-    print(user_message)
+    try:
+        user_message = event["text"]
+        data = {"message": user_message, "mode": "query"}
 
-    response = requests.post(API_URL, json=data, headers=HEADER)
-    if response.status_code == 200:
+        response = requests.post(API_URL, json=data, headers=HEADER)
+        response.raise_for_status()
         model_reply = response.json()
         say(model_reply["textResponse"])
-    else:
-        print(f"handle message events failed: {response.status_code}，error: {response.text}")
+    except requests.exceptions.RequestException as e:
+        logger.error(f"API request failed: {e}")
+        say("Sorry, I'm having trouble connecting to the AI. Please try again later.")
+    except Exception as e:
+        logger.exception(f"An unexpected error occurred: {e}")
+        say("Something went wrong. Please try again later.")

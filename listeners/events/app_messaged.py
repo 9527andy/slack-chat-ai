@@ -11,18 +11,19 @@ Handles the event when the app is mentioned in a Slack channel, retrieves the co
 and generates an AI response if text is provided, otherwise sends a default response
 """
 
-def app_messaged_callback(message, say, logger):
-    print(message)
-    user_message = message["text"]
-    data =  {
-        "message": user_message,
-        "mode": "chat"
-        }
-    print(user_message)
 
-    response = requests.post(API_URL, json=data, headers=HEADER)
-    if response.status_code == 200:
+def app_messaged_callback(message, say, logger):
+    try:
+        user_message = message["text"]
+        data = {"message": user_message}
+
+        response = requests.post(API_URL, json=data, headers=HEADER)
+        response.raise_for_status()
         model_reply = response.json()
         say(model_reply["textResponse"])
-    else:
-        print(f"handle message events failed: {response.status_code}，error: {response.text}")
+    except requests.exceptions.RequestException as e:
+        logger.error(f"API request failed: {e}")
+        say("Sorry, I'm having trouble connecting to the AI. Please try again later.")
+    except Exception as e:
+        logger.exception(f"An unexpected error occurred: {e}")
+        say("Something went wrong. Please try again later.")

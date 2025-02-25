@@ -4,13 +4,10 @@ import requests
 from dotenv import load_dotenv
 import os
 from listeners import register_listeners
-
-load_dotenv('.env')
-
+from constants.constant import TOKEN
 
 
-
-app = App(token=os.environ.get("SLACK_BOT_TOKEN"))
+app = App(token=TOKEN)
 
 register_listeners(app)
 

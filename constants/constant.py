@@ -6,4 +6,5 @@ HEADER ={
     "Authorization": f"Bearer {API_KEY}",
     "Content-Type": "application/json"
 }
+TOKEN = os.environ.get("SLACK_BOT_TOKEN")
 
