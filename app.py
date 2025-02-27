@@ -1,7 +1,5 @@
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
-import requests
-from dotenv import load_dotenv
 import os
 from listeners import register_listeners
 from constants.constant import TOKEN
