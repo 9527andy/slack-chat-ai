@@ -9,7 +9,7 @@ and generates an AI response if text is provided, otherwise sends a default resp
 
 def app_messaged_callback(message, say, logger, client):
     channel = message.get("channel")
-    thread = message.get("thread_ts")
+    thread = message.get("ts")
     user = message.get("user")
     user_input = message.get("text")
 

@@ -9,7 +9,7 @@ and generates an AI response if text is provided, otherwise sends a default resp
 
 def app_mentioned_callback(event, say, logger, client):
     channel = event.get("channel")
-    thread = event.get("thread_ts")
+    thread = event.get("ts")
     user = event.get("user")
     user_input = event.get("text")
 
@@ -21,7 +21,7 @@ def app_mentioned_callback(event, say, logger, client):
             thread_ts=thread,
             username=user,
         )
-        print(response)
+        
     except SlackApiError as e:
         logger.error(f"Error sending message: {e}")
     except Exception as e:
