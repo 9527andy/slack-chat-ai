@@ -23,6 +23,21 @@ This app will communicate with Anything LLM, If the user sends a question to sla
 1. App Home
    1. Show Tabs - > Message Tab - > On
    2. Show Tabs - > Message Tab - > Allow users to send Slash commands and messages from the message tab
+  
+## Anything LLM setup
+
+`
+export STORAGE_LOCATION=$HOME/anythingllm && \
+mkdir -p $STORAGE_LOCATION && \
+touch "$STORAGE_LOCATION/.env" && \
+docker run -d -p 3001:3001 \
+--cap-add SYS_ADMIN \
+-v ${STORAGE_LOCATION}:/app/server/storage \
+-v ${STORAGE_LOCATION}/.env:/app/server/.env \
+-e STORAGE_DIR="/app/server/storage" \
+mintplexlabs/anythingllm
+`
+
 ## Python environment setup 
 1. New Python visual environment
    
